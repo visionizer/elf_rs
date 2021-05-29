@@ -9,8 +9,8 @@ mod elf_header;
 mod program_header;
 mod section_header;
 
-use elf::ElfGen;
-use elf_header::{ElfHeaderGen};
+pub use elf::ElfGen;
+pub use elf_header::{ElfHeaderGen};
 
 pub use elf_header::{ElfAbi, ElfClass, ElfEndian, ElfMachine, ElfType};
 pub use program_header::ProgramType;
