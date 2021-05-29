@@ -4,10 +4,10 @@
 #[macro_use] extern crate bitflags;
 extern crate num_traits;
 
-mod elf;
-mod elf_header;
-mod program_header;
-mod section_header;
+pub mod elf;
+pub mod elf_header;
+pub mod program_header;
+pub mod section_header;
 
 pub use elf::ElfGen;
 pub use elf_header::{ElfHeaderGen};
