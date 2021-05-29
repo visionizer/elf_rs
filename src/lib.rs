@@ -37,7 +37,7 @@ impl<'a> Elf<'a> {
         use core::mem::size_of;
 
         if elf_buf.len() < size_of::<ElfHeaderGen::<u32>>() {
-            return Err(Error::BufferTooShort);
+            return Err(Error::InvalidClass);
         }
 
         if !elf_buf.starts_with(&elf_header::ELF_MAGIC) {
@@ -48,11 +48,11 @@ impl<'a> Elf<'a> {
         match tmp_elf.header().class() {
             ElfClass::Elf64 => { 
                 if elf_buf.len() < size_of::<ElfHeaderGen<u64>>() {
-                    return Err(Error::BufferTooShort);
+                    return Err(Error::InvalidMagic);
                 }
                 let elf = Elf64::new(elf_buf);
                 if elf_buf.len() < elf.header().elf_header_size() as usize {
-                    Err(Error::BufferTooShort)
+                    Err(Error::InvalidMagic)
                 } else {
                     Ok(Elf::Elf64(elf))
                 }
@@ -60,7 +60,7 @@ impl<'a> Elf<'a> {
             ElfClass::Elf32 => { 
                 let elf = Elf32::new(elf_buf);
                 if elf_buf.len() < elf.header().elf_header_size() as usize {
-                    Err(Error::BufferTooShort)
+                    Err(Error::InvalidMagic)
                 } else {
                     Ok(Elf::Elf32(elf))
                 }
